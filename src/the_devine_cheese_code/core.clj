@@ -1,5 +1,5 @@
-(ns the-divine-cheese-code.core
-  (:require [the-divine-cheese-code.visualization.svg :refer [xml]]
+(ns the-devine-cheese-code.core
+  (:require [the-devine-cheese-code.visualization.svg :refer [xml]]
             [clojure.java.browse :as browse])
   (:gen-class))
 
