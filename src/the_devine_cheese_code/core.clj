@@ -1,11 +1,10 @@
-(ns the-devine-cheese-code.core
+(ns the-divine-cheese-code.core
+  (:require [the-divine-cheese-code.visualization.svg :refer [xml]]
+            [clojure.java.browse :as browse])
   (:gen-class))
-(require 'the-devine-cheese-code.visualization.svg)
-
-(refer 'the-devine-cheese-code.visualization.svg)
 
 (def heists [{:location "Cologne, Germany"
-              :cheese-name "Cheese Pretzel"
+              :cheese-name "Archbishop Hildebold's Cheese Pretzel"
               :lat 50.95
               :lng 6.97}
              {:location "Zurich, Switzerland"
@@ -20,17 +19,28 @@
               :cheese-name "The Lesser Emmental"
               :lat 47.37
               :lng 8.55}
-             {:location "Vatican City (The Holy Sea)"
+             {:location "Vatican City"
               :cheese-name "The Cheese of Turin"
               :lat 41.90
               :lng 12.45}])
-             
 
-             
-  
+(defn url
+  [filename]
+  (str "file:///"
+       (System/getProperty "user.dir")
+       "/"
+       filename))
 
-
+(defn template
+  [contents]
+  (str "<style>polyline { fill:none; stroke:#5881d8; stroke-width:3}</style>"
+       contents))
 
 (defn -main
   [& args]
-  (println (points heists)))
+  (let [filename "map.html"]
+    (->> heists
+         (xml 50 100)
+         template
+         (spit filename))
+    (browse/browse-url (url filename))))
